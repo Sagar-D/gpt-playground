@@ -34,7 +34,7 @@ if __name__ == "__main__":
         for line in response.strip().split("\n"):
             if line:
                 data = json.loads(line)
-                print(data["message"]["content"], end=" ")
+                print(data["message"]["content"], end="")
         print("Response:", response.json())
     except Exception as e:
         print("An error occurred:", e)
