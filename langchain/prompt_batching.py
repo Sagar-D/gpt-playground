@@ -9,13 +9,13 @@ class LangClient:
     ):
         self.base_url = base_url
         self.model = model
-        self.client = ChatOllama(
+        self.llm = ChatOllama(
             base_url=base_url, model=model, temperature=temperature
         )
 
     def batch_prompts(self, prompt_list):
         """Method to invoke a batch of prompts and return the batch response"""
-        return self.client.batch(prompt_list)
+        return self.llm.batch(prompt_list)
 
 
 if __name__ == "__main__":

@@ -10,13 +10,13 @@ class LangClient:
         """Initiate the ChatOllama client with host, model and temparature and create a client"""
         self.base_url = base_url
         self.model = model
-        self.client = ChatOllama(
+        self.llm = ChatOllama(
             base_url=base_url, model=model, temperature=temperature
         )
 
     def invoke_prompt(self, prompt):
         """Method to invoke a single prompt and get back complete response"""
-        return self.client.invoke(prompt)
+        return self.llm.invoke(prompt)
 
 
 if __name__ == "__main__":
