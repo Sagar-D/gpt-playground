@@ -38,4 +38,4 @@ if __name__ == "__main__":
     ):
         print(f"Q{index}. {prompt.capitalize()}")
         print(response.content)
-        print("\n", "--" * 50, "\n\n", sep='')
+        print("\n", "--" * 50, "\n\n", sep="")
