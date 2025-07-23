@@ -3,3 +3,4 @@ ollama
 openai
 langchain-ollama
 langchain-core
+grandalf
