@@ -16,7 +16,7 @@ def user_prompt_manager(user_input):
 
 
 def chat_history_manager(llm_response):
-    chat_history.append({"role": "assistant", "content": user_input})
+    chat_history.append({"role": "assistant", "content": llm_response})
     return llm_response
 
 
@@ -38,5 +38,5 @@ if __name__ == "__main__":
         user_input = input()
         if user_input == "/bye":
             break
-        response = chat_bot_chain.invoke(user_input)
-        print(response)
+        for chunk in chat_bot_chain.stream(user_input) :
+            print(chunk)
