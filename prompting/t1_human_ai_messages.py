@@ -2,11 +2,14 @@ from langchain_ollama import ChatOllama
 from langchain_core.prompts import ChatPromptTemplate, HumanMessagePromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.messages import HumanMessage , AIMessage
+import dotenv
+import os
 
+dotenv.load_dotenv()
 
 llm = ChatOllama(
-    base_url="http://localhost:11434",
-    model="llama3.2",
+    base_url=os.getenv("LLM_BASE_URL"),
+    model=os.getenv("LLM_MODEL"),
     temperature=0
 )
 

@@ -2,12 +2,16 @@ from langchain_ollama import ChatOllama
 from langchain_core.prompts import (
     ChatPromptTemplate,
     SystemMessagePromptTemplate,
-    HumanMessagePromptTemplate,
 )
 from langchain_core.output_parsers import StrOutputParser
-from langchain_core.messages import SystemMessage, HumanMessage
+import dotenv
+import os
 
-llm = ChatOllama(base_url="http://localhost:11434", model="llama3.2", temperature=0)
+dotenv.load_dotenv()
+
+llm = ChatOllama(
+    base_url=os.getenv("LLM_BASE_URL"), model=os.getenv("LLM_MODEL"), temperature=0
+)
 
 parser = StrOutputParser()
 
@@ -39,12 +43,16 @@ personality = input()
 print("\n", "--" * 50, "\n\n", sep="")
 custom_personality_template = ChatPromptTemplate.from_messages(
     [
-        SystemMessagePromptTemplate.from_template("You are an assitant who is impersonating {personality}."),
+        SystemMessagePromptTemplate.from_template(
+            "You are an assitant who is impersonating {personality}."
+        ),
         ("human", "{prompt}"),
     ]
 )
 
-custom_personality_chain = custom_personality_template.partial(personality=personality) | llm | parser
+custom_personality_chain = (
+    custom_personality_template.partial(personality=personality) | llm | parser
+)
 
 print(f"\n\nWelcome to {personality} Chat!!")
 print("Ask your query!")
@@ -52,4 +60,3 @@ print("\n>>> ", end="")
 prompt = input()
 print(f"\n{personality} : ", custom_personality_chain.invoke({"prompt": prompt}))
 print("\n", "--" * 50, "\n\n", sep="")
-

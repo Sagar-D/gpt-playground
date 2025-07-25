@@ -1,18 +1,23 @@
 from langchain_ollama import ChatOllama
+import dotenv
+import os
+
+dotenv.load_dotenv()
 
 
 class LangClient:
     """Class to create a ChatOllama client object"""
 
     def __init__(
-        self, base_url="http://localhost:11434", model="llama3.2", temperature=0
+        self,
+        base_url=os.getenv("LLM_BASE_URL"),
+        model=os.getenv("LLM_MODEL"),
+        temperature=0,
     ):
         """Initiate the ChatOllama client with host, model and temparature and create a client"""
         self.base_url = base_url
         self.model = model
-        self.llm = ChatOllama(
-            base_url=base_url, model=model, temperature=temperature
-        )
+        self.llm = ChatOllama(base_url=base_url, model=model, temperature=temperature)
 
     def invoke_prompt(self, prompt):
         """Method to invoke a single prompt and get back complete response"""

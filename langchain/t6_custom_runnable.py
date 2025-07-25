@@ -3,6 +3,10 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnableLambda
 import contractions
+import dotenv
+import os
+
+dotenv.load_dotenv()
 
 
 def text_preprocessor(text):
@@ -38,15 +42,20 @@ Note : Respond in only one word. Don't add any additional comments or notes.
 prompt_argument_converter = RunnableLambda(lambda text: {"statemet": text})
 
 # Create an llm instance to connect with the LLM model
-llm = ChatOllama(base_url="http://localhost:11434", model="llama3.2", temperature=0)
+llm = ChatOllama(
+    base_url=os.getenv("LLM_BASE_URL"), model=os.getenv("LLM_MODEL"), temperature=0
+)
 
 # create a output parser
 parser = StrOutputParser()
 
 # create sentiment analysis chain
 sentiment_analysis_chain = (
-    text_preprocessor_runnable | prompt_argument_converter | sentiment_analysis_template
-    | llm | parser
+    text_preprocessor_runnable
+    | prompt_argument_converter
+    | sentiment_analysis_template
+    | llm
+    | parser
 )
 
 

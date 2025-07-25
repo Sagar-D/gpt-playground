@@ -1,10 +1,16 @@
 from langchain_ollama import ChatOllama
+import dotenv
+import os
 
+dotenv.load_dotenv()
 
-class LLMClient:
+class LLMClient():
 
     def __init__(
-        self, base_url="http://localhost:11434", model="llama3.2", temperature=0.8
+        self,
+        base_url=os.getenv("LLM_BASE_URL"),
+        model=os.getenv("LLM_MODEL"),
+        temperature=0.8,
     ):
         self.model = model
         self.base_url = base_url

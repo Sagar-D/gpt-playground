@@ -1,9 +1,12 @@
 from langchain_ollama import ChatOllama
 from langchain_core.runnables import RunnableLambda
 from langchain_core.output_parsers import StrOutputParser
-import json
+import dotenv
+import os
 
-llm = ChatOllama(base_url="http://localhost:11434", model="llama3.2", temperature=0)
+dotenv.load_dotenv()
+
+llm = ChatOllama(base_url=os.getenv("LLM_BASE_URL"), model=os.getenv("LLM_MODEL"), temperature=0)
 
 parser = StrOutputParser()
 

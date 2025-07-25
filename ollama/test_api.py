@@ -1,10 +1,13 @@
 import json
 import requests
+import dotenv
+import os
 
+dotenv.load_dotenv()
 
 class OllamaClient:
 
-    def __init__(self, model="llama3.2", base_url="http://localhost:11434"):
+    def __init__(self, model=os.getenv("LLM_MODEL"), base_url=os.getenv("LLM_BASE_URL")):
         self.base_url = base_url
         self.model = model
 

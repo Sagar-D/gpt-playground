@@ -1,17 +1,22 @@
 from langchain_ollama import ChatOllama
+import dotenv
+import os
+
+dotenv.load_dotenv()
 
 
 class LangClient:
     """Class to create ChatOllama client for specific host and model"""
 
     def __init__(
-        self, base_url="http://localhost:11434", model="llama3.2", temperature=0
+        self,
+        base_url=os.getenv("LLM_BASE_URL"),
+        model=os.getenv("LLM_MODEL"),
+        temperature=0,
     ):
         self.base_url = base_url
         self.model = model
-        self.llm = ChatOllama(
-            base_url=base_url, model=model, temperature=temperature
-        )
+        self.llm = ChatOllama(base_url=base_url, model=model, temperature=temperature)
 
     def batch_prompts(self, prompt_list):
         """Method to invoke a batch of prompts and return the batch response"""

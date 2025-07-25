@@ -1,10 +1,13 @@
 from ollama import chat
 from ollama import Client
+import dotenv
+import os
 
+dotenv.load_dotenv()
 
 def directChat(prompt):
     """Directly use the chat function from the ollama module."""
-    response = chat(model='llama3.2', messages=[
+    response = chat(model=os.getenv("LLM_MODEL"), messages=[
         {
             'role': 'user',
             'content': prompt,
@@ -12,7 +15,7 @@ def directChat(prompt):
     ])
     return response.message.content
 
-def chatByCreatingClient(host='http://localhost:11434', prompt="Why is the sky blue?"):
+def chatByCreatingClient(host=os.getenv("LLM_BASE_URL"), prompt="Why is the sky blue?"):
     """Use the OllamaClient to send a chat message."""
     client = Client(
       host=host,

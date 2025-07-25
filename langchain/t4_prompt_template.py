@@ -1,19 +1,24 @@
 from langchain_ollama import ChatOllama
 from langchain_core.prompts import ChatPromptTemplate
 import random
+import dotenv
+import os
+
+dotenv.load_dotenv()
 
 
 class LangClient:
     """Calss to create Langchain ChatOllama client"""
 
     def __init__(
-        self, base_url="http://localhost:11434", model="llama3.2", temperature="0.2"
+        self,
+        base_url=os.getenv("LLM_BASE_URL"),
+        model=os.getenv("LLM_MODEL"),
+        temperature="0.2",
     ):
         self.model = model
         self.base_url = base_url
-        self.llm = ChatOllama(
-            model=model, base_url=base_url, temperature=temperature
-        )
+        self.llm = ChatOllama(model=model, base_url=base_url, temperature=temperature)
 
 
 if __name__ == "__main__":

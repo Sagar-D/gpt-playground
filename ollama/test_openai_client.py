@@ -1,6 +1,5 @@
 from openai import OpenAI
 
-
 class OpenAIClient:
     """A simple client to interact with OpenAI's API using the OpenAI Python library."""
 
