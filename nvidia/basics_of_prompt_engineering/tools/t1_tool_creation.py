@@ -13,7 +13,7 @@ llm = ChatOllama(base_url=os.getenv('LLM_BASE_URL'), model=os.getenv('LLM_MODEL'
 
 # Schema for Add Tool
 class AddToolSchema(BaseModel) :
-    """Use when and if you need to add two numbers."""
+    """Use this **only** if you need to add two numbers. Not for general questions."""
     num1: int = Field(..., description="first number")
     num2: int = Field(..., description="second number")
 
@@ -24,7 +24,7 @@ def add(num1, num2) :
 
 # Schema for multiply tool
 class MultiplyToolSchema(BaseModel) :
-    """Use this tool to multiply 2 numbers"""
+    """Use this **only** if you need to multiply two numbers. Not for general questions."""
     num1: int = Field(..., description="first number")
     num2: int = Field(..., description="second number")
 
@@ -33,12 +33,24 @@ class MultiplyToolSchema(BaseModel) :
 def multiply(num1, num2) :
     return num1 * num2
     
+
 # Bind both the tools to llm
 llm_with_tool_binding = llm.bind_tools([add, multiply])
 
+system_message_prompt = ChatPromptTemplate.from_messages([
+    ("system", """You are a helpful assistant capable of tool calling when helpful, necessary, and appropriate.
+
+Think hard about whether or not you need to call a tool, \
+based on your tools' descriptions and use them, but only when appropriate!
+
+Whether or not you need to call a tool, address the user's query in a helpful informative way."""),
+    ("human", "{prompt}")
+])
+
+
 
 def tool_caller(llm_response) :
-    if llm_response.tool_calls == None :
+    if len(llm_response.tool_calls) == 0 :
         return llm_response.content
     
     tools_map = {
@@ -49,10 +61,16 @@ def tool_caller(llm_response) :
     selected_tool = tools_map[llm_response.tool_calls[0]['name']]
     return selected_tool.invoke(llm_response.tool_calls[0]['args'])
 
-chain =  llm_with_tool_binding | RunnableLambda(tool_caller)
+chain = system_message_prompt | llm_with_tool_binding | RunnableLambda(tool_caller)
 
-llm_response = chain.invoke("What is the sum of 12445 and 14325")
+
+llm_response = chain.invoke({'prompt': "What is the sum of 12445 and 14325"})
 print(f"Sum : {llm_response}")
 
-llm_response = chain.invoke("What is the product of 12445 and 14325")
+llm_response = chain.invoke({'prompt': "What is the product of 12445 and 14325"})
 print(f"Product : {llm_response}")
+
+# Note : Tool is hallucinating and using tools for every query even after add system message
+# Need to understand why and how to fix it
+llm_response = chain.invoke({'prompt': "Why earth is not flat"})
+print(f"Random Question : {llm_response}")
