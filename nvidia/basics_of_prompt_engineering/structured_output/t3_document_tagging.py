@@ -10,7 +10,7 @@ from pprint import pprint
 dotenv.load_dotenv()
 
 llm = ChatOllama(
-    base_url=os.getenv("LLM_BASE_URL"), model=os.getenv("LLM_MODEL"), temperature=0.2
+    base_url=os.getenv("LLM_BASE_URL"), model=os.getenv("LLM_MODEL"), temperature=0
 )
 
 apollo_story = """
