@@ -4,5 +4,6 @@ ollama
 openai
 langchain-ollama
 langchain-core
+langgraph
 grandalf
 contractions
