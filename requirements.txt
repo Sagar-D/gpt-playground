@@ -4,6 +4,12 @@ ollama
 openai
 langchain-ollama
 langchain-core
+langchain
+langchain-community
 langgraph
 grandalf
 contractions
+pypdf
+rapidocr-onnxruntime #Extract images as text from pdf. Used by pypdf
+pydantic
+rich
