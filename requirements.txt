@@ -13,3 +13,6 @@ pypdf
 rapidocr-onnxruntime #Extract images as text from pdf. Used by pypdf
 pydantic
 rich
+beautifulsoup4 #Required for WebBasedDocumentLoader
+sentence-transformers # Required for HuggingFaceEmbedding
+chromadb

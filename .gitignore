@@ -4,3 +4,5 @@ __pycache__/
 *.pyc
 test.py
 .env
+conspiracy_db/
+reditt_conspiracy_db/
