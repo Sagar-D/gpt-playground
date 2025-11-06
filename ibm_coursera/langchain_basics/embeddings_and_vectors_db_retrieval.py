@@ -22,7 +22,6 @@ llm = ChatOllama(
 
 ## Load Web page to documents
 web_page = "https://www.livescience.com/11375-top-ten-conspiracy-theories.html"
-vector_collection_name = "international_conspiracies"
 web_document_loader = WebBaseLoader(web_page)
 document = web_document_loader.load()
 print("Downloaded Web page content...")
@@ -53,8 +52,8 @@ vector_store = Chroma.from_documents(
     documents=chunks,
     embedding=embeddings,
     ids=doc_ids,
-    persist_directory="conspiracy_db",
-    collection_name=vector_collection_name,
+    persist_directory="vector_db/conspiracy_db",
+    collection_name="international_conspiracies",
 )
 vector_store.persist()
 print("Embeddingas nad documents stored in Chroma Vector DB...")
