@@ -41,8 +41,12 @@ embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-
 embedding_vectors = embeddings.embed_documents([chunk.page_content for chunk in chunks])
 print("Embeddigns created...")
 
+## Set Vector DB params
+vector_db_path = "vector_db/conspiracy_db"
+vector_db_collection_name = "international_conspiracies"
+
 ## Clear older data in Chrome Vector store
-shutil.rmtree("conspiracy_db", ignore_errors=True)
+shutil.rmtree(vector_db_path, ignore_errors=True)
 
 ## Create unique document ids
 doc_ids = [f"doc_{i}" for i in range(len(embedding_vectors))]
@@ -52,8 +56,8 @@ vector_store = Chroma.from_documents(
     documents=chunks,
     embedding=embeddings,
     ids=doc_ids,
-    persist_directory="vector_db/conspiracy_db",
-    collection_name="international_conspiracies",
+    persist_directory=vector_db_path,
+    collection_name=vector_db_collection_name,
 )
 vector_store.persist()
 print("Embeddingas nad documents stored in Chroma Vector DB...")
