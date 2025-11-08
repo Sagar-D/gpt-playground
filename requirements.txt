@@ -16,3 +16,5 @@ rich
 beautifulsoup4 #Required for WebBasedDocumentLoader
 sentence-transformers # Required for HuggingFaceEmbedding
 chromadb
+gradio
+hashlib
