@@ -7,3 +7,4 @@ test.py
 vector_db/
 conspiracy_db/
 reditt_conspiracy_db/
+.webui_secret_key
