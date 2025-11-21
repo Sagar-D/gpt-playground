@@ -17,5 +17,9 @@ beautifulsoup4 #Required for WebBasedDocumentLoader
 sentence-transformers # Required for HuggingFaceEmbedding
 chromadb
 gradio
-hashlib
 open-webui # GUI for Ollama
+youtube-transcript-api # To download transcripts of youtube video
+llama-index
+llama-index-vector-stores-chroma
+llama-index-embeddings-huggingface
+trafilatura
