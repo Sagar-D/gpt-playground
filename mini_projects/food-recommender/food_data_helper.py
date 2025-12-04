@@ -100,7 +100,7 @@ def get_metatdat_filters(prompt: str, collection: Collection):
     metadata_filter["$and"].append({"cuisine_type": cuisine_filter["cuisine_type"]})
     metadata_filter["$and"].append({"cooking_method": cooking_method_filter["cooking_method"]})
 
-    if len(documents=collection.get(where=metadata_filter)["documents"]) == 0:
+    if len(collection.get(where=metadata_filter)["documents"]) == 0:
         if len(cuisine_filter) != 0:
             return cuisine_filter
         elif len(cooking_method_filter) != 0:

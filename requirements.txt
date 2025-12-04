@@ -28,3 +28,12 @@ pydub # high level library to handle audio files
 # huggingface
 transformers
 torch
+
+# MM RAG
+image
+pillow
+torchvision
+google-search-results
+scikit-learn
+pandas
+numpy
